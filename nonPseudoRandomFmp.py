@@ -3,7 +3,6 @@ import numpy as np
 def nOnes(nIn,nOut):
     return 2*nOut - nIn
 
-
 if __name__ == "__main__":
     nInW,nInH = 30, 30
     nOutW = 18 
