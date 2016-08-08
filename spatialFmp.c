@@ -9,6 +9,7 @@ struct Matrix
 	float *matrix;
 };
 
+
 struct Matrix *newMatrix(long w, long h)
 {
 	struct Matrix *m = malloc(sizeof(struct Matrix));
@@ -40,11 +41,18 @@ void matrixPrint(struct Matrix *m){
 }
 
 
+struct Sequence 
+{
+	long w;
+	float *sequence;
+};
+
 long* generateIntervals(float u, long nIn, long nOut, int poolSize){
 	float alpha;
 	alpha = (float)(nIn - poolSize)/(float)(nOut - 1);
 	long *sequence = (long*)malloc(sizeof(long)*nOut+1);
 	long i;
+	int gap = 1;
 	sequence[0] = 0;
 	sequence[nOut+1] = nIn;
 	for(i=1;i<=nOut ;i++){
