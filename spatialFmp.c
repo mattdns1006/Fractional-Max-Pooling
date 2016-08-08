@@ -20,7 +20,7 @@ struct Matrix *newMatrix(long w, long h)
 	for(j=0; j< m->h; j++){
 		for(i=0; i< m->w; i++){
 			idx = i + j*m->w;
-			m->matrix[idx] = idx + sin(idx);
+			m->matrix[idx] = idx*2;
 		}
 	}
 	return m;
@@ -153,8 +153,8 @@ void forwardInput(struct Matrix *input, struct Matrix *output, struct Sequence *
 int main(void){
 
 	int poolSize = 2;
-	long inputW = 5;
-	long inputH = 4; // Make everything square to begin with
+	long inputW = 10;
+	long inputH = 10; // Make everything square to begin with
 	float fmp = 0.6;
 	long outputH = floor(inputH*fmp);
 	long outputW = floor(inputW*fmp);
@@ -163,7 +163,7 @@ int main(void){
 	struct Matrix *input = newMatrix(inputW,inputH);
 	struct Matrix *output = newMatrix(outputW,outputH);
 	matrixPrint(input);
-	matrixPrint(output);
+	//matrixPrint(output);
 
 	struct Sequence *sequenceH = newSequence(inputW, outputW, inputH, outputH, poolSize);
 	sequencePrint(sequenceH);
