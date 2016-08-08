@@ -43,22 +43,39 @@ void matrixPrint(struct Matrix *m){
 
 struct Sequence 
 {
-	long w;
-	float *sequence;
+	long nIn;
+	long nOut;
+	int poolSize;
+	long* sequence;
 };
 
-long* generateIntervals(float u, long nIn, long nOut, int poolSize){
+struct Sequence *newSequence(long nIn, long nOut, int poolSize)
+{
+	struct Sequence *s = malloc(sizeof(struct Sequence));
+	s->nIn = nIn;
+	s->nOut = nOut;
+	s->poolSize = poolSize;
+	s->sequence = (long*)malloc(sizeof(long)*nOut+1);
 	float alpha;
 	alpha = (float)(nIn - poolSize)/(float)(nOut - 1);
-	long *sequence = (long*)malloc(sizeof(long)*nOut+1);
 	long i;
-	int gap = 1;
-	sequence[0] = 0;
-	sequence[nOut+1] = nIn;
+	float u = 0.5;
+	s->sequence[0] = 0;
+	s->sequence[nOut+1] = nIn;
 	for(i=1;i<=nOut ;i++){
-		sequence[i] = ceil(alpha*(i+u))-1;
+		s->sequence[i] = ceil(alpha*(i+u))-1;
 	}
-	return sequence;
+	return s;
+};
+
+void sequencePrint(struct Sequence *s){
+	int gap = 1;
+	int i;
+	printf("Sequence ==> \n");
+	for(i=1;i<=s->nOut;i++){
+		printf("%*ld",gap, s->sequence[i]);
+	}
+	printf("\n\n");
 }
 
 
@@ -77,9 +94,11 @@ int main(void){
 	matrixPrint(input);
 	matrixPrint(output);
 
-	long *sequenceH, *sequenceW;
-	sequenceW = generateIntervals(u,inputW,outputW,poolSize);
-	sequenceH = generateIntervals(u,inputH,outputH,poolSize);
+	//long *sequenceH, *sequenceW;
+	struct Sequence *sequenceH = newSequence(inputH,outputH,poolSize);
+	struct Sequence *sequenceW = newSequence(inputW,outputW,poolSize);
+	sequencePrint(sequenceH);
+	sequencePrint(sequenceW);
 
 	return 0;
 }
