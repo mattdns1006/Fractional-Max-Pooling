@@ -46,7 +46,7 @@ struct Sequence
 	long nIn;
 	long nOut;
 	int poolSize;
-	long* sequence;
+	long *sequence;
 };
 
 struct Sequence *newSequence(long nIn, long nOut, int poolSize)
@@ -55,50 +55,53 @@ struct Sequence *newSequence(long nIn, long nOut, int poolSize)
 	s->nIn = nIn;
 	s->nOut = nOut;
 	s->poolSize = poolSize;
-	s->sequence = (long*)malloc(sizeof(long)*nOut+1);
+	s->sequence = (long*)malloc(sizeof(long)*(nOut+1));
 	float alpha;
 	alpha = (float)(nIn - poolSize)/(float)(nOut - 1);
 	long i;
 	float u = 0.5;
 	s->sequence[0] = 0;
-	s->sequence[nOut+1] = nIn;
-	for(i=1;i<=nOut ;i++){
+	s->sequence[nOut+1] = nIn - 1;
+	for(i=1;i <= s->nOut ;i++){
 		s->sequence[i] = ceil(alpha*(i+u))-1;
 	}
 	return s;
 };
 
 void sequencePrint(struct Sequence *s){
-	int gap = 1;
+	int gap = 5;
 	int i;
-	printf("Sequence ==> \n");
-	for(i=1;i<=s->nOut;i++){
-		printf("%*ld",gap, s->sequence[i]);
+	printf("Indices Sequence\n");
+	for(i=0;i<=s->nOut;i++){
+		printf("%*d ",gap,i);
+		printf("%*ld ",gap, s->sequence[i]);
+	printf("\n");
 	}
 	printf("\n\n");
+}
+
+void forwardInput(struct Matrix *input, struct Matrix *output, struct Sequence *sequence){
 }
 
 
 int main(void){
 
 	int poolSize = 2;
-	long inputW = 10;
-	long inputH = 10;
+	long inputW = 20;
+	long inputH = inputW; // Make everything square to begin with
 	float fmp = 0.7;
 	long outputH = floor(inputH*fmp);
 	long outputW = floor(inputW*fmp);
 	float u = 0.5;
-
+	
 	struct Matrix *input = newMatrix(inputW,inputH);
 	struct Matrix *output = newMatrix(outputW,outputH);
 	matrixPrint(input);
 	matrixPrint(output);
 
 	//long *sequenceH, *sequenceW;
-	struct Sequence *sequenceH = newSequence(inputH,outputH,poolSize);
-	struct Sequence *sequenceW = newSequence(inputW,outputW,poolSize);
-	sequencePrint(sequenceH);
-	sequencePrint(sequenceW);
+	struct Sequence *sequence = newSequence(inputH,outputH,poolSize);
+	sequencePrint(sequence);
 
 	return 0;
 }
