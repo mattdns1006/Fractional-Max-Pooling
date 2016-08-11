@@ -1,6 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <jpeglib.h>
 
 struct Matrix
 {
@@ -162,7 +163,7 @@ int main(void){
 	
 	struct Matrix *input = newMatrix(inputW,inputH);
 	struct Matrix *output = newMatrix(outputW,outputH);
-	matrixPrint(input);
+	//matrixPrint(input);
 	//matrixPrint(output);
 
 	struct Sequence *sequenceH = newSequence(inputW, outputW, inputH, outputH, poolSize);
