@@ -1,6 +1,6 @@
 require "nn"
 
-nIn = 10 
+nIn = 15 
 fmp = 0.7
 poolSize = 2
 nOut = math.floor(nIn*fmp)
@@ -18,7 +18,7 @@ a = {}
 for i=1,nOut do 
 	alpha = (nIn - poolSize)/(nOut - 1)
 	--u = fmp.randomSamples[1][1][1]
-	u = 0.5
+	u = 0.8
 	a_ = alpha*(i+u)
 	a[i] = math.ceil(a_)
 	if i > 1 then
@@ -28,10 +28,6 @@ for i=1,nOut do
 	end
 end
 
-x1 = torch.range(0,9)
-for i = 1, nOut do 
-	print(x1[a[i]])
-end
 
 
 
